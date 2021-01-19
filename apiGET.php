@@ -5,6 +5,9 @@ $arrayMensaje = array(); //Asociativo
 $arrayVuelos = array(); //Numérico
 $contador = 0;
 
+$destino = $_GET["destino"];
+$origen = $_GET["origen"];
+$fecha = $_GET["fecha"];
 if(isset($origen) || isset($fecha) || isset($destino)){
     $resultado = $coleccion->find(['origen' => $origen, 'destino' => $destino, 'fecha' => $fecha]);
     foreach ($resultado as $entry){
