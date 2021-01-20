@@ -18,6 +18,7 @@ function insertarUNO($_DATA, $coleccion)
             ['$push' => $datos, '$inc' => array("plazas_disponibles" => -1)]
         );
 
+
         $vuelo = $coleccion->find(array("codigo" => $_DATA['codigo']));
         $fecha = "";
         $destino = "";
@@ -34,7 +35,7 @@ function insertarUNO($_DATA, $coleccion)
         }
 
 
-        $arrayMensaje[] = array(
+        $arrayMensaje = array(
             "estado" => true,
             "codigo" => $_DATA['codigo'],
             "origen" => $origen,
@@ -52,7 +53,7 @@ function insertarUNO($_DATA, $coleccion)
         );
 
     } catch (Exception $e) {
-        $arrayMensaje[] = array(
+        $arrayMensaje = array(
             "estado" => false,
             "mensaje" => "No se ha podido realizar la compra por $e"
         );

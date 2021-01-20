@@ -37,7 +37,7 @@ if (datosCorrectos($method, $_DATA)) {
             break;
         default:
             $arrayMensaje = array(
-                "estado" => "KO",
+                "estado" => false,
                 "mensaje" => "Método $method no implementado"
             );
             break;
@@ -46,7 +46,7 @@ if (datosCorrectos($method, $_DATA)) {
 
 } else {  // Los datos que nos han enviado no son correctos o están incompletos
     $arrayMensaje = array(
-        "estado" => "KO",
+        "estado" => false,
         "mensaje" => "No se puede completar la acción con los datos recibidos"
     );
 }
