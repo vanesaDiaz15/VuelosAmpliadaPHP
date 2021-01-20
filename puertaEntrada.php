@@ -15,11 +15,9 @@ if ($primerCaracter == '{') { // Me han enviado los datos con un json
 } else {
     // echo "Nos han enviado un formulario 'normal'";
     parse_str($recibido, $_DATA);
-
 }
 
 if (datosCorrectos($method, $_DATA)) {
-    var_dump($method);
     switch ($method) {
         case 'GET':
             require 'apiGET.php';
@@ -53,8 +51,6 @@ if (datosCorrectos($method, $_DATA)) {
     );
 }
 
-$mensajeFinalJSON = json_encode($arrayMensaje, JSON_PRETTY_PRINT);
-echo $mensajeFinalJSON;
 
 
 function datosCorrectos($metodo, $_DATA)
