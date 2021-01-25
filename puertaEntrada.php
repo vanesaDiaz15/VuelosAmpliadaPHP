@@ -73,12 +73,13 @@ function datosCorrectos($metodo, $_DATA)
             }
             break;
         case 'PUT':
-            if (count($_DATA) <> 6) {
+            if (count($_DATA) <> 8) {
                 $todoOK = false;
             } else {
                 if (!isset($_DATA['codigo']) || !isset($_DATA['dni']) ||
                     !isset($_DATA['codigoVenta']) || !isset($_DATA['dniPagador']) ||
-                    !isset($_DATA['nombre']) || !isset($_DATA['apellido'])) {
+                    !isset($_DATA['nombre']) || !isset($_DATA['apellido']) ||
+                    !isset($_DATA['dniNuevo']) || !isset($_DATA['tarjeta'])) {
                     $todoOK = false;
                 }
             }

@@ -1,27 +1,21 @@
 <?php
-
-
-function insertarUNO($_DATA, $coleccion)
+function modificarUNO($_DATA, $coleccion)
 {
-    $permitted_chars = 'ABCEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-
-    $arrayMensaje = array(); //Asociativo
-    $vendido = array(
-        "dni" => $_DATA['dni'],
-        "apellido" => $_DATA['apellido'],
-        "nombre" => $_DATA['nombre'],
-        "dniPagador" => $_DATA['dniPagador'],
-        "tarjeta" => $_DATA['tarjeta'],
-        "codigoVenta" => generate_string($permitted_chars, 9)
-    );
+    $arrayMensaje = array();
     try {
-        $filterOption = array("codigo" => $_DATA['codigo']);
-        $datos = array("vendidos" => $vendido);
-
-        $coleccion->updateMany(
-            $filterOption,
-            ['$push' => $datos, '$inc' => array("plazas_disponibles" => -1)]
+        $vendido = array(
+            "dni" => $_DATA['dniNuevo'],
+            "apellido" => $_DATA['apellido'],
+            "nombre" => $_DATA['nombre'],
+            "dniPagador" => $_DATA['dniPagador'],
+            "tarjeta" => $_DATA['tarjeta'],
+            "codigoVenta" => $_DATA['codigoVenta']
         );
+        $datos = array("vendidos.$" => $vendido);
+        $query = array( "codigo" => $_DATA["codigo"], "vendidos.dni" => $_DATA['dni'], "vendidos.codigoVenta" => $_DATA['codigoVenta']);
+        $coleccion->update(
+            $query,
+            ['$set' => $datos]);
 
 
         $vuelo = $coleccion->find(array("codigo" => $_DATA['codigo']));
@@ -52,8 +46,7 @@ function insertarUNO($_DATA, $coleccion)
             "apellido" => $_DATA['apellido'],
             "nombre" => $_DATA['nombre'],
             "dniPagador" => $_DATA['dniPagador'],
-            "tarjeta" => $_DATA['tarjeta'],
-            "codigoVenta" => "GHJ7766GG",
+            "codigoVenta" =>$_DATA['codigoVenta'],
             "precio" => $precio,
         );
 
@@ -67,18 +60,5 @@ function insertarUNO($_DATA, $coleccion)
     $mensajeJSON = json_encode($arrayMensaje, JSON_PRETTY_PRINT);
     echo $mensajeJSON;
 }
-
-
-function generate_string($input, $strength = 16) {
-    $input_length = strlen($input);
-    $random_string = '';
-    for($i = 0; $i < $strength; $i++) {
-        $random_character = $input[mt_rand(0, $input_length - 1)];
-        $random_string .= $random_character;
-    }
-
-    return $random_string;
-}
-
 
 ?>
