@@ -7,6 +7,7 @@ function insertarUNO($_DATA, $coleccion)
 
     $arrayMensaje = array(); //Asociativo
     $vendido = array(
+        "asiento" => asignarAsiento($_DATA['codigo'], $coleccion),
         "dni" => $_DATA['dni'],
         "apellido" => $_DATA['apellido'],
         "nombre" => $_DATA['nombre'],
@@ -80,5 +81,27 @@ function generate_string($input, $strength = 16) {
     return $random_string;
 }
 
+function asignarAsiento($codigo,$coleccion){
+    $resultado = $coleccion->find(array("codigo" => $codigo));
 
+    $ptotales = "";
+    foreach ($resultado as $entry) {
+        $ptotales = $entry['plazas_totales'];
+    }
+    $resultado = $coleccion->find(array("codigo" => $codigo));
+    $random = mt_rand(1, $ptotales);
+    foreach ($resultado as $entry) {
+        if (isset($entry['vendidos'])){
+            $a =  $entry['vendidos'];
+            $asiento = $a[0]['asiento'];
+            if ($asiento == $random) {
+                $random = mt_rand(1, $ptotales);
+            }
+        }else{
+
+        }
+
+    }
+    return $random;
+}
 ?>

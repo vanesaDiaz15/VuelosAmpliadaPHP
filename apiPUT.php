@@ -4,19 +4,17 @@ function modificarUNO($_DATA, $coleccion)
     $arrayMensaje = array();
     try {
         $vendido = array(
-            "dni" => $_DATA['dniNuevo'],
-            "apellido" => $_DATA['apellido'],
-            "nombre" => $_DATA['nombre'],
-            "dniPagador" => $_DATA['dniPagador'],
-            "tarjeta" => $_DATA['tarjeta'],
-            "codigoVenta" => $_DATA['codigoVenta']
+            "vendidos.$.dni" => $_DATA['dniNuevo'],
+            "vendidos.$.apellido" => $_DATA['apellido'],
+            "vendidos.$.nombre" => $_DATA['nombre'],
+            "vendidos.$.dniPagador" => $_DATA['dniPagador'],
+            "vendidos.$.tarjeta" => $_DATA['tarjeta'],
+            "vendidos.$.codigoVenta" => $_DATA['codigoVenta']
         );
-        $datos = array("vendidos.$" => $vendido);
         $query = array( "codigo" => $_DATA["codigo"], "vendidos.dni" => $_DATA['dni'], "vendidos.codigoVenta" => $_DATA['codigoVenta']);
-        $coleccion->update(
+        $updateResult = $coleccion->updateMany(
             $query,
-            ['$set' => $datos]);
-
+            ['$set' => $vendido]);
 
         $vuelo = $coleccion->find(array("codigo" => $_DATA['codigo']));
         $fecha = "";
